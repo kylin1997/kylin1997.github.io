@@ -9,7 +9,7 @@ categories:
   - [harness, 01-architecture]
 ---
 
-![Harness Engineering 封面](/assets/cover.zh.png)
+![Harness Engineering 封面](assets/cover.zh.png)
 
 agent 出问题时，大多数人的第一反应是修改提示词、然后换模型、然后加大 context window，
 
@@ -85,7 +85,7 @@ OpenAI 在用 Codex 构建 agent 优先的代码库时，也描述过同一种�
 
 ## 一个生产级 harness 有七项职责
 
-![七项职责](/assets/seven-jobs.zh.png)
+![七项职责](assets/seven-jobs.zh.png)
 
 ---
 
@@ -311,7 +311,7 @@ Anthropic 在长运行 agent 方面的工作也得出过类似结论
 
 ## 失败应推动系统升级
 
-![把失败经验落实到基础设施中](/assets/failure-upgrades.zh.png)
+![把失败经验落实到基础设施中](assets/failure-upgrades.zh.png)
 
 多数人修补的是当前输出
 

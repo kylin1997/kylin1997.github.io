@@ -5,7 +5,7 @@
 # Site
 title: 老张的博客
 subtitle: ''
-description: '老张的博客 —— 记录技术、学习与生活'
+description: '^_^碳基老张 —— 持续学习、好好生活'
 keywords:
 author: Zhang Guoli
 language: zh-CN
@@ -43,7 +43,7 @@ render_drafts: false
 post_asset_folder: false
 relative_link: false
 future: true
-syntax_highlighter: highlight.js
+syntax_highlighter: prismjs
 highlight:
   line_number: true
   auto_detect: false
@@ -53,6 +53,7 @@ highlight:
 prismjs:
   preprocess: true
   line_number: true
+  line_threshold: 0
   tab_replace: ''
 
 # Home page setting
@@ -68,6 +69,16 @@ index_generator:
 default_category: uncategorized
 category_map:
 tag_map:
+category_generator:
+  per_page: 10
+  order_by: -date
+tag_generator:
+  per_page: 10
+  order_by: -date
+archive_generator:
+  enabled: true
+  per_page: 20
+  order_by: -date
 
 # Metadata elements
 ## https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta
@@ -96,7 +107,7 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: fluid
+theme: butterfly
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment

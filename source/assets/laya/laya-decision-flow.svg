@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="850" viewBox="0 0 900 850" role="img" aria-labelledby="title desc">
+<title id="title">一次移动如何决定：游戏状态到文字说明，再到模型评判和程序移动</title>
+<desc id="desc">棋盘是相对方位示意。选项数字来自训练数据第一条，未展示模型实际输出。</desc>
+<style>text{font-family:"PingFang SC","Microsoft YaHei",sans-serif;fill:#172033;font-size:19px}.heading{font-size:23px;font-weight:600}.note{font-size:17px;fill:#475569}</style>
+<defs><marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0 0L10 4L0 8Z" fill="#64748b"/></marker></defs>
+<rect width="900" height="850" fill="white"/>
+
+<rect x="30" y="20" width="840" height="240" rx="12" fill="#f0fdf4" stroke="#86efac"/>
+<text x="54" y="57" class="heading">1  当前游戏状态</text>
+<rect x="54" y="78" width="29" height="29" fill="white" stroke="#d5e5da"/>
+<rect x="83" y="78" width="29" height="29" fill="white" stroke="#d5e5da"/>
+<rect x="112" y="78" width="29" height="29" fill="white" stroke="#d5e5da"/>
+<rect x="141" y="78" width="29" height="29" fill="white" stroke="#d5e5da"/>
+<rect x="170" y="78" width="29" height="29" fill="white" stroke="#d5e5da"/>
+<rect x="199" y="78" width="29" height="29" fill="white" stroke="#d5e5da"/>
+<rect x="228" y="78" width="29" height="29" fill="white" stroke="#d5e5da"/>
+<rect x="257" y="78" width="29" height="29" fill="white" stroke="#d5e5da"/>
+<rect x="54" y="107" width="29" height="29" fill="white" stroke="#d5e5da"/>
+<rect x="83" y="107" width="29" height="29" fill="white" stroke="#d5e5da"/>
+<rect x="112" y="107" width="29" height="29" fill="white" stroke="#d5e5da"/>
+<rect x="141" y="107" width="29" height="29" fill="white" stroke="#d5e5da"/>
+<rect x="170" y="107" width="29" height="29" fill="white" stroke="#d5e5da"/>
+<rect x="199" y="107" width="29" height="29" fill="white" stroke="#d5e5da"/>
+<rect x="228" y="107" width="29" height="29" fill="white" stroke="#d5e5da"/>
+<rect x="257" y="107" width="29" height="29" fill="white" stroke="#d5e5da"/>
+<rect x="54" y="136" width="29" height="29" fill="white" stroke="#d5e5da"/>
+<rect x="83" y="136" width="29" height="29" fill="white" stroke="#d5e5da"/>
+<rect x="112" y="136" width="29" height="29" fill="white" stroke="#d5e5da"/>
+<rect x="141" y="136" width="29" height="29" fill="white" stroke="#d5e5da"/>
+<rect x="170" y="136" width="29" height="29" fill="white" stroke="#d5e5da"/>
+<rect x="199" y="136" width="29" height="29" fill="white" stroke="#d5e5da"/>
+<rect x="228" y="136" width="29" height="29" fill="white" stroke="#d5e5da"/>
+<rect x="257" y="136" width="29" height="29" fill="white" stroke="#d5e5da"/>
+<rect x="54" y="165" width="29" height="29" fill="white" stroke="#d5e5da"/>
+<rect x="83" y="165" width="29" height="29" fill="white" stroke="#d5e5da"/>
+<rect x="112" y="165" width="29" height="29" fill="white" stroke="#d5e5da"/>
+<rect x="141" y="165" width="29" height="29" fill="white" stroke="#d5e5da"/>
+<rect x="170" y="165" width="29" height="29" fill="white" stroke="#d5e5da"/>
+<rect x="199" y="165" width="29" height="29" fill="white" stroke="#d5e5da"/>
+<rect x="228" y="165" width="29" height="29" fill="white" stroke="#d5e5da"/>
+<rect x="257" y="165" width="29" height="29" fill="white" stroke="#d5e5da"/>
+<rect x="54" y="194" width="29" height="29" fill="white" stroke="#d5e5da"/>
+<rect x="83" y="194" width="29" height="29" fill="white" stroke="#d5e5da"/>
+<rect x="112" y="194" width="29" height="29" fill="white" stroke="#d5e5da"/>
+<rect x="141" y="194" width="29" height="29" fill="white" stroke="#d5e5da"/>
+<rect x="170" y="194" width="29" height="29" fill="white" stroke="#d5e5da"/>
+<rect x="199" y="194" width="29" height="29" fill="white" stroke="#d5e5da"/>
+<rect x="228" y="194" width="29" height="29" fill="white" stroke="#d5e5da"/>
+<rect x="257" y="194" width="29" height="29" fill="white" stroke="#d5e5da"/>
+<rect x="202" y="110" width="23" height="23" rx="4" fill="#86efac"/>
+<rect x="231" y="110" width="23" height="23" rx="4" fill="#86efac"/>
+<rect x="173" y="110" width="23" height="23" rx="4" fill="#15803d"/><path d="M190 116L181 121L190 126" fill="none" stroke="white" stroke-width="2"/><circle cx="97.5" cy="179.5" r="9" fill="#f97316"/>
+<text x="54" y="246" class="note">方位示意，不是实际棋盘坐标</text>
+<text x="340" y="115" class="">蛇头朝左，食物在蛇头左下方</text>
+<text x="340" y="151" class="">程序读取蛇、食物的位置和可选方向</text>
+<text x="340" y="195" class="note">深绿：蛇头    浅绿：蛇身    橙色：食物</text>
+<path d="M450 262V291" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="30" y="295" width="840" height="240" rx="12" fill="#eff6ff" stroke="#93c5fd"/>
+<text x="54" y="332" class="heading">2  程序生成文字说明，交给 Laya</text>
+<text x="54" y="366" class="note">游戏状态 + 选择规则 + 每个方向的报告（中文概括）</text>
+<text x="54" y="406" class="">选项 / 方向</text>
+<text x="300" y="406" class="">移动后到食物的距离</text>
+<text x="600" y="406" class="">移动后可到达的空格</text>
+<text x="54" y="444" class="">A  上</text>
+<text x="355" y="444" class="">21 步</text>
+<text x="655" y="444" class="">574 格</text>
+<text x="54" y="477" class="">B  下</text>
+<text x="355" y="477" class="">19 步</text>
+<text x="655" y="477" class="">574 格</text>
+<text x="54" y="510" class="">C  左</text>
+<text x="355" y="510" class="">19 步</text>
+<text x="655" y="510" class="">574 格</text>
+<path d="M450 537V566" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="30" y="570" width="840" height="110" rx="12" fill="#faf5ff" stroke="#c4b5fd"/>
+<text x="54" y="607" class="heading">3  Laya 评判选项</text>
+<text x="54" y="644" class="">读取文字，返回所选选项和各选项的概率</text>
+<path d="M450 682V711" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="30" y="715" width="840" height="110" rx="12" fill="#fff7ed" stroke="#fdba74"/>
+<text x="54" y="752" class="heading">4  程序移动蛇</text>
+<text x="54" y="789" class="">根据结果选择方向，移动一格；下一步再重复这个过程</text>
+</svg>

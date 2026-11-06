@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1010" viewBox="0 0 900 1010" role="img" aria-labelledby="title desc" data-quality-profile="showcase">
+<title id="title">训练的四个动作：先计算并累计梯度，再更新权重</title>
+<desc id="desc">每批最多 8 道题。前三步每批执行：前向计算选项概率，对照参考答案计算损失，反向传播求出梯度并累计，权重暂不改变。若未攒够 8 批且本轮未结束，保持权重，取下一批继续。攒够 8 批或本轮到末尾，优化器 AdamW 更新一次权重，再清空累计梯度。后续题目使用新权重。A 0.68、B 0.11、C 0.21 与参考 C 都是单题教学示意，不是实测输出；答案不进入模型输入。</desc>
+<style>text{font-family:"PingFang SC","Microsoft YaHei",sans-serif;fill:#111827}.title{font-weight:600}.heading{font-weight:600}.note{fill:#475569}.loop-label{fill:#7c3aed}.example{fill:#334155}.reference{fill:#166534}</style>
+<defs>
+<marker id="arrow-blue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><path d="M0 0L10 3.5L0 7Z" fill="#2563eb"/></marker>
+<marker id="arrow-purple" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><path d="M0 0L10 3.5L0 7Z" fill="#7c3aed"/></marker>
+</defs>
+<rect width="900" height="1010" fill="white" data-graph-role="background"/>
+
+<text x="30" y="44" font-size="27" class="title" text-anchor="start" data-graph-role="label">从一批题目，到一次权重更新</text>
+<text x="30" y="76" font-size="19" class="note" text-anchor="start" data-graph-role="label">①②③ 每批计算；④ 满足累计条件后才更新权重</text>
+<path id="forward-loss" data-graph-role="edge" data-source="forward" data-target="loss" d="M420 254V304" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-blue)"/>
+<path id="reference-loss" data-graph-role="edge" data-source="reference" data-target="loss" d="M720 360H660" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-blue)"/>
+<path id="loss-backward" data-graph-role="edge" data-source="loss" data-target="backward" d="M420 416V466" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-blue)"/>
+<path id="backward-gate" data-graph-role="edge" data-source="backward" data-target="gate" d="M420 576V616" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-blue)"/>
+<path id="repeat-fixed-weights" data-graph-role="edge" data-source="gate" data-target="forward" d="M290 676H130V184H180" fill="none" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow-purple)"/>
+<path id="gate-update" data-graph-role="edge" data-source="gate" data-target="update" d="M420 736V786" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-blue)"/>
+<rect id="forward" data-node-id="forward" data-graph-role="node" x="180" y="112" width="480" height="142" rx="8" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
+<text x="204" y="147" font-size="23" class="heading" text-anchor="start">① 前向计算</text>
+<text x="204" y="180" font-size="19" class="" text-anchor="start">输入一批题目（最多 8 道），算出选项概率</text>
+<text x="204" y="209" font-size="17" class="note" text-anchor="start">其中一道题的概率（示意）</text>
+<text x="204" y="236" font-size="21" class="example" text-anchor="start">A：0.68</text>
+<rect x="204" y="242" width="112" height="4" rx="2" fill="#e2e8f0"/>
+<rect x="204" y="242" width="76.16" height="4" rx="2" fill="#2563eb"/>
+<text x="352" y="236" font-size="21" class="example" text-anchor="start">B：0.11</text>
+<rect x="352" y="242" width="112" height="4" rx="2" fill="#e2e8f0"/>
+<rect x="352" y="242" width="12.32" height="4" rx="2" fill="#64748b"/>
+<text x="500" y="236" font-size="21" class="example" text-anchor="start">C：0.21</text>
+<rect x="500" y="242" width="112" height="4" rx="2" fill="#e2e8f0"/>
+<rect x="500" y="242" width="23.52" height="4" rx="2" fill="#16a34a"/>
+<rect id="loss" data-node-id="loss" data-graph-role="node" x="180" y="304" width="480" height="112" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+<text x="204" y="340" font-size="23" class="heading" text-anchor="start">② 计算损失</text>
+<text x="204" y="373" font-size="19" class="" text-anchor="start">对照参考答案，计算这一批的平均损失</text>
+<text x="204" y="402" font-size="17" class="note" text-anchor="start">概率与参考答案相差多少，用损失衡量</text>
+<rect id="reference" data-node-id="reference" data-graph-role="node" x="720" y="308" width="140" height="100" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+<text x="790" y="339" font-size="21" class="reference" text-anchor="middle">参考答案</text>
+<text x="790" y="368" font-size="19" class="reference" text-anchor="middle">示意题：C</text>
+<text x="790" y="395" font-size="17" class="note" text-anchor="middle">不喂给模型</text>
+<rect id="backward" data-node-id="backward" data-graph-role="node" x="180" y="466" width="480" height="110" rx="8" fill="#faf5ff" stroke="#c4b5fd" stroke-width="1.5"/>
+<text x="204" y="502" font-size="23" class="heading" text-anchor="start">③ 反向传播</text>
+<text x="204" y="535" font-size="19" class="" text-anchor="start">求梯度：权重变一点，损失会怎样变化</text>
+<text x="204" y="564" font-size="17" class="note" text-anchor="start">本批梯度先累计，权重还不变</text>
+<polygon id="gate" data-node-id="gate" data-graph-role="node" data-bounds="290 616 550 736" points="420,616 550,676 420,736 290,676" fill="#fff7ed" stroke="#fdba74" stroke-width="1.5"/>
+<text x="420" y="672" font-size="22" class="heading" text-anchor="middle">攒够 8 批？</text>
+<text x="420" y="698" font-size="17" class="note" text-anchor="middle">或本轮到末尾</text>
+<text x="205" y="665" font-size="17" class="loop-label" text-anchor="start" data-graph-role="label">未满*</text>
+<text x="30" y="458" font-size="17" class="loop-label" text-anchor="start" data-graph-role="label">取下一批</text>
+<text x="30" y="484" font-size="17" class="loop-label" text-anchor="start" data-graph-role="label">权重不变</text>
+<text x="436" y="765" font-size="17" class="note" text-anchor="start" data-graph-role="label">已满 / 本轮末尾</text>
+<rect id="update" data-node-id="update" data-graph-role="node" x="180" y="786" width="480" height="140" rx="8" fill="#fff7ed" stroke="#fdba74" stroke-width="1.5"/>
+<text x="204" y="822" font-size="23" class="heading" text-anchor="start">④ 更新权重</text>
+<text x="204" y="855" font-size="19" class="" text-anchor="start">优化器 AdamW 按累计梯度调整权重</text>
+<text x="204" y="885" font-size="19" class="" text-anchor="start">学习率控制幅度；编码器与决策头一起更新</text>
+<text x="204" y="914" font-size="17" class="note" text-anchor="start">清空累计梯度，后续题目使用新权重</text>
+<text x="30" y="957" font-size="17" class="note" text-anchor="start" data-graph-role="label">* 未满且本轮未结束，才取下一批继续累计。</text>
+<g data-graph-role="legend"><path d="M30 984H68" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow-blue)"/>
+<text x="80" y="990" font-size="17" class="note" text-anchor="start">计算流程</text>
+<path d="M250 984H288" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrow-purple)"/>
+<text x="300" y="990" font-size="17" class="note" text-anchor="start">保持权重，继续下一批</text>
+</g></svg>

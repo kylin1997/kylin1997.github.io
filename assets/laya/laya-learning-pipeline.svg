@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="900" viewBox="0 0 900 900" role="img" aria-labelledby="title desc">
+<title id="title">Laya 训练流程：准备数据、继续训练、比较游戏表现</title>
+<desc id="desc">保留官方模型，另存新权重和配置。训练前后使用同样的验证样本；验证样本不用于训练或概率校准。先记录训练前效果，再训练，最后记录训练后效果。</desc>
+<style>text{font-family:"PingFang SC","Microsoft YaHei",sans-serif;fill:#172033;font-size:18px}.heading{font-size:22px;font-weight:600}.card-title{font-size:19px;font-weight:600}.note{font-size:17px;fill:#475569}</style>
+<defs><marker id="arrow" markerWidth="9" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0 0L9 4L0 8Z" fill="#64748b"/></marker></defs>
+<rect width="900" height="900" fill="white" data-graph-role="background"/>
+<rect x="20" y="20" width="860" height="270" rx="12" fill="#f0fdfa" stroke="#99e4d6" data-graph-role="container"/>
+<text x="40" y="55" class="heading">准备数据：从游戏记录得到训练样本</text>
+<rect x="40" y="85" width="230" height="100" rx="12" fill="#ffffff" stroke="#cbd5e1"/>
+<text x="58" y="115" class="card-title">① 玩游戏并记录每一步</text>
+<text x="58" y="149" class="">三种程序，共 60 局</text>
+<rect x="320" y="85" width="230" height="100" rx="12" fill="#ffffff" stroke="#cbd5e1"/>
+<text x="338" y="115" class="card-title">② 整理成训练样本</text>
+<text x="338" y="149" class="">清理、去重，按整局分开</text>
+<path d="M270 135L320 135" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M550 135L600 135" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="600" y="85" width="260" height="170" rx="12" fill="#ffffff" stroke="#5eead4"/>
+<text x="618" y="115" class="card-title">2000 条样本，三种用途</text>
+<text x="618" y="151" class="">1665 条：调整权重</text>
+<text x="618" y="184" class="">184 条：校准概率</text>
+<text x="618" y="217" class="">151 条：只用于比较</text>
+<text x="40" y="218" class="note">每条样本：游戏状态 + 选项 + Oracle 参考方向</text>
+<text x="40" y="252" class="note">验证样本不用于训练或概率校准</text>
+<path d="M450 290L450 326" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="20" y="326" width="860" height="360" rx="12" fill="#faf5ff" stroke="#d8c5f4" data-graph-role="container"/>
+<text x="40" y="360" class="heading">继续训练：保留官方模型，保存一个新模型</text>
+<rect x="40" y="390" width="220" height="104" rx="12" fill="#ffffff" stroke="#c4b5fd"/>
+<text x="58" y="421" class="card-title">官方 Laya</text>
+<text x="58" y="458" class="">原始模型文件保留</text>
+<rect x="310" y="390" width="280" height="104" rx="12" fill="#fff7ed" stroke="#fdba74"/>
+<text x="328" y="421" class="card-title">④ 继续训练，再校准概率</text>
+<text x="328" y="453" class="">1665 条训练 2 轮</text>
+<text x="328" y="479" class="note">随后用 184 条校准概率</text>
+<rect x="640" y="390" width="220" height="104" rx="12" fill="#ffffff" stroke="#c4b5fd"/>
+<text x="658" y="421" class="card-title">训练后的 Laya</text>
+<text x="658" y="458" class="">保存新权重和配置</text>
+<path d="M260 442L310 442" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M590 442L640 442" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="40" y="534" width="220" height="80" rx="12" fill="#f0fdf4" stroke="#86efac"/>
+<text x="58" y="565" class="card-title">③ 记录训练前效果</text>
+<text x="58" y="593" class="note">选择方向，与参考比较</text>
+<rect x="640" y="534" width="220" height="80" rx="12" fill="#f0fdf4" stroke="#86efac"/>
+<text x="658" y="565" class="card-title">⑤ 记录训练后效果</text>
+<text x="658" y="593" class="note">选择方向，与参考比较</text>
+<path d="M150 494L150 534" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M750 494L750 534" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M260 550H285V478H310" fill="none" stroke="#64748b" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+<text x="322" y="567" class="card-title">同一批 151 条验证样本</text>
+<text x="322" y="599" class="note">只用于比较，不调整权重</text>
+<path d="M310 574L260 574" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M590 574L640 574" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="40" y="654" class="note">虚线：③完成后才开始④。实线：数据或模型的传递。</text>
+<path d="M450 686L450 722" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="20" y="722" width="860" height="158" rx="12" fill="#eff6ff" stroke="#93c5fd" data-graph-role="container"/>
+<text x="40" y="757" class="heading">比较游戏表现：能吃到多少食物</text>
+<rect x="40" y="785" width="490" height="75" rx="12" fill="#ffffff" stroke="#cbd5e1"/>
+<text x="58" y="815" class="card-title">⑥ 两个模型分别玩贪吃蛇</text>
+<text x="58" y="844" class="note">使用同一批种子，各玩 7 局，比较得分</text>
+<rect x="580" y="785" width="280" height="75" rx="12" fill="#ffffff" stroke="#cbd5e1"/>
+<text x="598" y="815" class="card-title">⑦ 生成效果对比报告</text>
+<text x="598" y="844" class="note">汇总成可离线查看的 HTML</text>
+<path d="M530 823L580 823" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+</svg>

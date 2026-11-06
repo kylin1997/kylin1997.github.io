@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1000" viewBox="0 0 900 1000" role="img" aria-labelledby="title desc">
+<title id="title">Laya 架构：文字如何变成选项分数和概率</title>
+<desc id="desc">游戏程序提供文字。分词器生成编号；ModernBERT 编码器先查嵌入表，再加工上下文向量；决策头加入题型信息，经两层网络后读取选项标记位置，由 scorer 产生原始分数。SDK 用温度和 softmax 换算概率，再由游戏程序选择方向并移动。本次训练可更新编码器和选择决策头的权重；辅助 act_head 不用于选方向，本次不更新。温度在训练后另行校准。</desc>
+<style>text{font-family:"PingFang SC","Microsoft YaHei",sans-serif;fill:#172033;font-size:19px}.title{font-size:27px;font-weight:600}.heading{font-size:23px;font-weight:600}.note{font-size:17px;fill:#475569}.badge{font-size:17px;fill:#92400e}.output{font-size:19px;fill:#334155}</style>
+<defs><marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0 0L10 4L0 8Z" fill="#64748b"/></marker></defs>
+<rect width="900" height="1000" fill="white"/>
+
+<text x="30" y="42" class="title">Laya 内部：从文字到选项分数</text>
+<text x="30" y="73" class="note">箭头表示数据流；橙色竖条标出本次训练可更新权重的模块</text>
+<g class="card"><rect x="30" y="94" width="840" height="88" rx="12" fill="#f0fdf4" stroke="#86efac"/></g>
+<text x="54" y="128" class="heading">输入：规则、状态描述、候选选项</text>
+<text x="742" y="126" class="note">游戏程序</text>
+<text x="54" y="163" class="">距离与活动空间由代码算好；交给 Laya 的是文字，不是棋盘图片</text>
+<path d="M30 202H315M585 202H870" stroke="#cbd5e1" stroke-dasharray="5 5"/>
+<rect x="318" y="189" width="264" height="27" fill="white"/>
+<text x="450" y="208" text-anchor="middle" class="note">文字进入 Laya SDK</text>
+<g class="card"><rect x="30" y="224" width="840" height="92" rx="12" fill="#f8fafc" stroke="#cbd5e1"/></g>
+<text x="54" y="260" class="heading">① 分词器 Tokenizer</text>
+<text x="686" y="258" class="note">预处理 · 不训练</text>
+<text x="54" y="295" class="">文字 → 小片段（token）→ 词表编号</text>
+<path class="connector" d="M450 318V343" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<g class="card"><rect x="30" y="347" width="840" height="136" rx="12" fill="#eff6ff" stroke="#93c5fd"/></g>
+<rect x="30" y="363" width="5" height="104" rx="2" fill="#d97706"/>
+<text x="54" y="383" class="heading">②③ 编码器 ModernBERT-large</text>
+<text x="682" y="381" class="badge">模型权重 · 可更新</text>
+<text x="54" y="419" class="">编号 → 查词嵌入表 → 多层网络加工上下文</text>
+<text x="54" y="456" class="output">输出：每个 token 一串上下文向量</text>
+<path class="connector" d="M450 485V511" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<g class="card"><rect x="30" y="515" width="840" height="158" rx="12" fill="#faf5ff" stroke="#c4b5fd"/></g>
+<rect x="30" y="531" width="5" height="126" rx="2" fill="#d97706"/>
+<text x="54" y="551" class="heading">④ 选择决策头</text>
+<text x="682" y="549" class="badge">模型权重 · 可更新</text>
+<text x="54" y="587" class="">加入题型信息（type_emb）→ 两层网络（head）</text>
+<text x="54" y="622" class="">读取各选项标记位置的向量 → 打分（scorer）</text>
+<text x="54" y="654" class="output">输出：A / B / C 各一个原始分数（logit）</text>
+<path class="connector" d="M450 675V701" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<g class="card"><rect x="30" y="705" width="840" height="96" rx="12" fill="#f8fafc" stroke="#cbd5e1"/></g>
+<text x="54" y="741" class="heading">⑤ SDK 换算概率</text>
+<text x="622" y="739" class="note">温度：训练后另行校准</text>
+<text x="54" y="779" class="">原始分数 ÷ 温度 → softmax → 选项概率（总和为 1）</text>
+<path d="M30 822H315M585 822H870" stroke="#cbd5e1" stroke-dasharray="5 5"/>
+<rect x="318" y="809" width="264" height="27" fill="white"/>
+<text x="450" y="828" text-anchor="middle" class="note">概率交回游戏程序</text>
+<g class="card"><rect x="30" y="844" width="840" height="96" rx="12" fill="#fff7ed" stroke="#fdba74"/></g>
+<text x="54" y="880" class="heading">程序选择并执行方向</text>
+<text x="742" y="878" class="note">游戏程序</text>
+<text x="54" y="918" class="">默认按概率采样；选项映射为方向，再让蛇移动一格</text>
+<text x="30" y="976" class="note">辅助 act_head 也会计算，但不用于选方向；本次无梯度，不更新（见正文）</text>
+</svg>

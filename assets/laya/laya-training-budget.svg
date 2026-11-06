@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="740" viewBox="0 0 900 740" role="img" aria-labelledby="title desc" data-quality-profile="showcase">
+<title id="title">样本数、小批数与权重更新次数</title>
+<desc id="desc">训练文件 1849 条，分为 1665 条用于调整权重、184 条仅用于训练后的温度校准。每轮最多 8 道题一批，共 209 个小批。通常攒 8 批更新一次，轮末不足也更新，每轮 27 次。相同训练样本处理 2 轮，合计 54 次参数更新。校准样本不参与梯度更新。</desc>
+<style>text{font-family:"PingFang SC","Microsoft YaHei",sans-serif;fill:#111827}.heading{font-weight:600}.note{fill:#475569}.count{font-weight:600}.calibration{fill:#166534}.summary{fill:#9a3412}</style>
+<defs><marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto"><path d="M0 0L10 3.5L0 7Z" fill="#2563eb"/></marker></defs>
+<rect width="900" height="740" fill="white" data-graph-role="background"/>
+<text x="40" y="46" font-size="27" class="heading"  data-graph-role="label">1849 条样本，怎样算出 54 次更新</text>
+<text x="40" y="78" font-size="19" class="note"  data-graph-role="label">先分开用途，再看每轮的小批数与更新次数</text>
+<path id="file-training" data-graph-role="edge" data-source="file" data-target="training" d="M270 182H340" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow)"/>
+<path id="file-calibration" data-graph-role="edge" data-source="file" data-target="calibration" d="M155 244V320" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow)"/>
+<path id="training-batches" data-graph-role="edge" data-source="training" data-target="batches" d="M455 244V320" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow)"/>
+<path id="batches-updates" data-graph-role="edge" data-source="batches" data-target="updates" d="M570 403H630" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow)"/>
+<path id="updates-total" data-graph-role="edge" data-source="updates" data-target="total" d="M745 486V566" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow)"/>
+<rect id="file" data-node-id="file" data-graph-role="node" x="40" y="120" width="230" height="124" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+<text x="60" y="153" font-size="21" class="heading" >训练文件</text>
+<text x="60" y="192" font-size="32" class="count" >1849 条</text>
+<text x="60" y="224" font-size="18" class="note" >data/train.jsonl</text>
+<rect id="training" data-node-id="training" data-graph-role="node" x="340" y="120" width="520" height="124" rx="8" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
+<text x="360" y="153" font-size="21" class="heading" >用于调整权重</text>
+<text x="360" y="192" font-size="32" class="count" >1665 条</text>
+<text x="360" y="224" font-size="19" class="note" >沿下面的主线，计算每轮更新次数</text>
+<rect id="calibration" data-node-id="calibration" data-graph-role="node" x="40" y="320" width="230" height="166" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+<text x="60" y="353" font-size="21" class="heading" >单独留作概率校准</text>
+<text x="60" y="393" font-size="32" class="count calibration" >184 条</text>
+<text x="60" y="423" font-size="18" class="calibration" >训练后调整温度</text>
+<text x="60" y="451" font-size="18" class="note" >不参与梯度更新</text>
+<rect id="batches" data-node-id="batches" data-graph-role="node" x="340" y="320" width="230" height="166" rx="8" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
+<text x="360" y="353" font-size="21" class="heading" >每轮分批计算</text>
+<text x="360" y="393" font-size="30" class="count" >209 个小批</text>
+<text x="360" y="426" font-size="18" class="" >每批最多 8 道题</text>
+<text x="360" y="456" font-size="17" class="note" >micro_batch = 8</text>
+<rect id="updates" data-node-id="updates" data-graph-role="node" x="630" y="320" width="230" height="166" rx="8" fill="#fff7ed" stroke="#fdba74" stroke-width="1.5"/>
+<text x="650" y="353" font-size="21" class="heading" >每轮更新权重</text>
+<text x="650" y="393" font-size="30" class="count" >27 次更新</text>
+<text x="650" y="423" font-size="18" class="" >通常攒 8 批再更新</text>
+<text x="650" y="451" font-size="17" class="note" >grad_accum = 8</text>
+<text x="650" y="472" font-size="18" class="note" >轮末不满 8 批也更新</text>
+<rect id="total" data-node-id="total" data-graph-role="node" x="340" y="566" width="520" height="108" rx="8" fill="#fff7ed" stroke="#fdba74" stroke-width="1.5"/>
+<text x="360" y="602" font-size="21" class="heading" >同样的 1665 条样本处理 2 轮</text>
+<text x="360" y="645" font-size="29" class="count summary" >合计 54 次参数更新</text>
+<text x="40" y="717" font-size="18" class="note"  data-graph-role="label">一轮：全部训练样本过一遍。小批数不等于更新次数。</text>
+</svg>

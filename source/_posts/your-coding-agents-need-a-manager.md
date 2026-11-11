@@ -1,18 +1,18 @@
 ---
 title: 你的 AI 编码智能体，需要一个管理者
 date: 2026-11-11 18:40:00
+description: 并行使用 AI 编码智能体时，开发者需要像管理团队一样明确任务边界、合理分派工作、验证成果，并协调异步协作。
 tags:
   - AI Agent
   - 翻译
 categories:
-  - [harness, 02-build]
+  - [harness, 03-run, multi-agent]
 ---
 
 > 原文标题：Your AI coding agents need a manager
 > 作者：[Addy Osmani](https://addyosmani.com/)
 > 发布日期：2026 年 1 月 8 日
 > 原文链接：<https://addyosmani.com/blog/coding-agents-manager/>
-> 译文语域：自然通用的技术书面语；专有名词、产品名与命令行名称保留英文，首次出现时附中文说明。
 
 让一个人成为优秀技术负责人或管理者的能力，可以直接迁移到 AI 编码上。一旦你开始并行跑多个智能体，你要做的就不再只是调试上下文，而是管理一个团队：清晰表达、任务分派、验证闭环、异步沟通。随着[智能体编排](https://addyosmani.com/blog/future-agentic-coding/)日渐成为主流，工作的形态正在改变。
 
@@ -133,48 +133,3 @@ OpenAI 的「AI 原生工程团队」指南把它表述为覆盖软件开发生�
 这就是编排。而想把它做好，最快的路径是去学那些让一个人能有效带领工程师的能力：清晰表达、任务分派、反馈闭环、异步沟通。
 
 很高兴和大家分享：我与 O'Reilly 合作出版了一本新的[AI 辅助工程图书](https://beyond.addy.ie/)。书站上还有不少免费提示，感兴趣的可以看看。
-
-## 译者附录（非原文内容）
-
-### 术语对照表
-
-| 中文 | 英文 | 说明 |
-|------|------|------|
-| 编码智能体 | coding agent | 全文统一用「智能体」；不译「代理」，避免与网络代理混淆 |
-| 智能体编排 | orchestration | 指并行调度多个智能体的工作方式，首次出现可写全称 |
-| 拉取请求（PR） | pull request / PR | 保留行业通用缩写 PR，首次出现给中文全称 |
-| 人在回路 | human-in-the-loop | 指关键判断始终由人参与；备选译法「人类在环」「人机协同」 |
-| 任务简报 | brief | 管理者语境的「任务交代文档」；不译「简报（新闻）」 |
-| 提示词 | prompt | "prompting problem" 译为「提示词问题」，避免扩写成「提示词工程」造成增译 |
-| 验收标准 | acceptance criteria | 与「完成定义（definition of done）」区分：前者可逐条检查 |
-| 非目标 | non-goals | 明确划出本次不做的范围 |
-| 验证闭环 | verification loop | 强调「反馈—修正—再验证」的循环，不直译「验证环」 |
-| 质量关卡 | quality gate | 流水线上的强制检查点 |
-| 异步进展同步 | async check-in | check-in 指下属定期汇报；备选译法「异步状态同步」 |
-| 合并冲突 | merge conflict | 版本控制术语 |
-| Git 工作树 | git worktree | 保留命令名 git worktree，中文用通用译法 |
-| 在制品（WIP）上限 | WIP limits | 精益/看板术语，限制并行在途任务数 |
-| 叫停标准 | kill criteria | 预先定义「什么情况下放弃」，备选译法「终止判据」 |
-| 接口接缝 | seam | 模块之间可插拔的边界；备选译法「衔接点」 |
-| 品味 | taste | 工程语境指长期积累的设计判断力，非审美偏好；备选译法「工程判断力」 |
-| 任务切换 | context switching | 此处指人的注意力在多任务间切换，特意不译「上下文切换」，以免与 LLM 的 context 混淆 |
-| PR 材料包 | PR packet | 智能体交付时附带的结构化说明 |
-| 控制平面 | control plane | 沿用基础设施领域译法 |
-| 沙箱隔离 | sandboxed | 强调隔离执行环境 |
-| 复盘 | retro (retrospective) | 团队流程改进会议 |
-
-### 译注与备选译法
-
-- 「写任务简报，别只给感觉」（Write a brief, not a vibe）：vibe 呼应作者另一本书 Beyond Vibe Coding 中的「凭感觉写代码」。备选：「写清任务书，别靠氛围」。
-- 「把智能体当作要向你汇报的下属」（Treat agents like reports）：reports 在管理语境中指「直接下属」，不是「报告文件」。备选：「把智能体当团队成员来带」。
-- 「任务切换」（context switching）：原文指人的注意力带宽，与模型上下文窗口无关。备选：「注意力切换」。
-- 「接口接缝」（seam）：指预留的模块边界，让后续改动可以挂靠。备选：「边界衔接点」。
-- 「塞满功能的杂物抽屉」（junk drawer of features）：英语习语，指杂乱无章的收纳抽屉。备选：「功能大杂烩」。
-- 「品味」（taste）：在多处与 judgment 并列，译为「品味与判断力」，指难以规则化的工程取舍能力。备选：「工程审美」。
-
-### 本地化与格式处理
-
-- 日期由 January 8, 2026 转为 2026 年 1 月 8 日；数量表达由英文数词转为阿拉伯数字（5～10、4～5、3～5、10～15、15 分钟、上千行）。
-- 原文两处站内相对链接 `/agentic-engineering/human-in-the-loop/`、`/agentic-engineering/sandboxing/` 已补全为 `https://addyosmani.com/` 开头的绝对地址，便于脱离原站阅读。
-- 标题层级、加粗/斜体、行内代码、分隔线、全部外链均按原结构保留；产品名（Claude Code、Codex、GitHub Copilot Agent、Agent HQ、Jules 等）与代码/文件名未翻译。
-- 原文「Related reading（延伸阅读）」属于站点导航模块，非文章正文，未纳入译文。

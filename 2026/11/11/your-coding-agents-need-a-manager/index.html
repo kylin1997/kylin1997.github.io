@@ -1,0 +1,215 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>你的 AI 编码智能体，需要一个管理者 | 老张的博客</title><meta name="author" content="Zhang Guoli"><meta name="copyright" content="Zhang Guoli"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="并行使用 AI 编码智能体时，开发者需要像管理团队一样明确任务边界、合理分派工作、验证成果，并协调异步协作。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="你的 AI 编码智能体，需要一个管理者">
+<meta property="og:url" content="https://kylin1997.github.io/2026/11/11/your-coding-agents-need-a-manager/index.html">
+<meta property="og:site_name" content="老张的博客">
+<meta property="og:description" content="并行使用 AI 编码智能体时，开发者需要像管理团队一样明确任务边界、合理分派工作、验证成果，并协调异步协作。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://kylin1997.github.io/img/butterfly-icon.png">
+<meta property="article:published_time" content="2026-11-11T10:40:00.000Z">
+<meta property="article:modified_time" content="2026-11-11T11:12:50.643Z">
+<meta property="article:author" content="Zhang Guoli">
+<meta property="article:tag" content="AI Agent">
+<meta property="article:tag" content="翻译">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kylin1997.github.io/img/butterfly-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "你的 AI 编码智能体，需要一个管理者",
+  "url": "https://kylin1997.github.io/2026/11/11/your-coding-agents-need-a-manager/",
+  "image": "https://kylin1997.github.io/img/butterfly-icon.png",
+  "datePublished": "2026-11-11T10:40:00.000Z",
+  "dateModified": "2026-11-11T11:12:50.643Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Zhang Guoli",
+      "url": "https://kylin1997.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://kylin1997.github.io/2026/11/11/your-coding-agents-need-a-manager/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: false,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '你的 AI 编码智能体，需要一个管理者',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">3</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">老张的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">你的 AI 编码智能体，需要一个管理者</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">你的 AI 编码智能体，需要一个管理者</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-11-11T10:40:00.000Z" title="发表于 2026-11-11 18:40:00">2026-11-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-11-11T11:12:50.643Z" title="更新于 2026-11-11 19:12:50">2026-11-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/harness/">harness</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/harness/03-run/">03-run</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/harness/03-run/multi-agent/">multi-agent</a></span></div><div class="meta-secondline"></div></div></div><article class="container post-content" id="article-container"><blockquote>
+<p>原文标题：Your AI coding agents need a manager<br>作者：<a target="_blank" rel="noopener" href="https://addyosmani.com/">Addy Osmani</a><br>发布日期：2026 年 1 月 8 日<br>原文链接：<a target="_blank" rel="noopener" href="https://addyosmani.com/blog/coding-agents-manager/">https://addyosmani.com/blog/coding-agents-manager/</a></p>
+</blockquote>
+<p>让一个人成为优秀技术负责人或管理者的能力，可以直接迁移到 AI 编码上。一旦你开始并行跑多个智能体，你要做的就不再只是调试上下文，而是管理一个团队：清晰表达、任务分派、验证闭环、异步沟通。随着<a target="_blank" rel="noopener" href="https://addyosmani.com/blog/future-agentic-coding/">智能体编排</a>日渐成为主流，工作的形态正在改变。</p>
+<p>在不远的将来，我认为杠杆率最高的开发者，会像是以异步为先的管理者，带着一小队并行工作的 AI 编码智能体。如今智能体已经能在后台、在隔离环境中干实实在在的活，并交回可评审的成果——通常是一个拉取请求（PR）。质量检查当然还是必须的，但瓶颈已经不再是「智能体能不能写代码？」，而是「这个东西我们该不该做？」以及「我能不能把多个干这活的智能体管好？」。</p>
+<p>我们已经能看到预示这一未来的<a target="_blank" rel="noopener" href="https://code.claude.com/docs/en/common-workflows">工作流</a>。Claude Code 的创造者 Boris Cherny 最近发的<a target="_blank" rel="noopener" href="https://twitter-thread.com/t/2007179832300581177">一条帖子</a>火了，因为它把这种转变讲得非常具体：他在本地终端标签页里跑 5 个 Claude Code 会话，浏览器里再跑 5～10 个，甚至还会用手机启动会话，之后再回来看结果。这就是编排。</p>
+<p>与此同时，一些善于思考的工程师也在用更审慎的视角记录「并行智能体」这种工作方式。Simon Willison 的<a target="_blank" rel="noopener" href="https://simonwillison.net/2025/Oct/5/parallel-coding-agents/">观点</a>是我反复回看的一篇：天然的瓶颈不是生成代码，而是评审代码。不过他依然认为并行派发任务有真实价值，前提是你对自己的注意力带宽足够诚实，并且选的任务不会把脑子压垮。我一直在搭建类似的工作流，也同意这一点：价值是真实的，但前提是把它当成管理，而不是魔法。</p>
+<p>这就是心态上的转变：你不再是和单个智能体结对，而是在带一个小团队。</p>
+<p>也正因如此，让一个人成为优秀技术负责人、工程经理或工程领导者的那些能力，突然之间就直接等同于「擅长 AI 编码」。因为规模化的 AI 编码不再是一个提示词问题，而是一个管理问题。</p>
+<h2 id="新工作流的心智模型"><a href="#新工作流的心智模型" class="headerlink" title="新工作流的心智模型"></a>新工作流的心智模型</h2><p>我把它想成并行的两种模式。</p>
+<p>第一种是本地、高介入度、始终保持<a target="_blank" rel="noopener" href="https://addyosmani.com/agentic-engineering/human-in-the-loop/">人在回路</a>的会话。用于架构决策、棘手的重构、产品上的细微差别、含糊不清的需求，以及一切由品味和判断力主导的工作。你在和智能体结对，实时纠偏，并做出那些需要智能体并不具备的上下文信息才能下的判断。</p>
+<p>第二种是异步运行的云端或后台会话。用于边界清晰、范围聚焦的任务：常规功能、模式明确的迁移、测试生成、文档更新、依赖升级、小型缺陷修复、局部重构。你把任务派发出去，切去做别的事，回来再评审产出。</p>
+<p>这种划分和现代工具的演进方向严丝合缝。云端智能体（想想 GitHub Copilot Agent、Claude Web、Codex、Jules 等）被明确定位为可并行、<a target="_blank" rel="noopener" href="https://addyosmani.com/agentic-engineering/sandboxing/">沙箱隔离</a>的任务：能写代码、能跑命令、能提交变更供你评审。</p>
+<p>GitHub 的 Copilot 编码智能体也是类似的定位——一个异步后台智能体，先开一个草稿 PR，在后台干活，然后请求评审，你可以在评审里提意见让它继续迭代。而各平台正在走向面向多个智能体（而不只是单个）的「任务控制台」式看板。GitHub 甚至预告了「Agent HQ」，把它作为在一个地方协调多个第三方编码智能体的控制平面，包括让它们并行跑同一批任务以对比产出。</p>
+<p>于是问题就从「哪个模型写的代码最好？」，更多变成了「我能不能像带一支高绩效团队那样来运作这件事？」</p>
+<p>管理能力正是在这里登场。</p>
+<h2 id="为什么管理能力能让你更擅长-AI-编码"><a href="#为什么管理能力能让你更擅长-AI-编码" class="headerlink" title="为什么管理能力能让你更擅长 AI 编码"></a>为什么管理能力能让你更擅长 AI 编码</h2><p>关于高效管理技能，我曾<a target="_blank" rel="noopener" href="https://leanpub.com/effective-software-engineering-management">专门深入写过</a>。</p>
+<p>带人的时候，你会用最痛的方式学到：产出的质量是在上游决定的。含糊不清、归属不明、缺少「完成」的定义、没有反馈闭环，都会带来反复返工。当你的「团队」是一群速度极快、非人类的智能体时，情况同样如此——甚至更甚。</p>
+<p>Anthropic 的 Claude Code 最佳实践指南把这话说得很直白：一开始就把要求写具体，能实质性地提高成功率、减少中途纠偏。这明明就是管理者的语言，哪怕它是写给一个工具看的。</p>
+<p>以下是迁移度最高的四项能力。</p>
+<h3 id="清晰的边界定义：写任务简报，别只给感觉"><a href="#清晰的边界定义：写任务简报，别只给感觉" class="headerlink" title="清晰的边界定义：写任务简报，别只给感觉"></a>清晰的边界定义：写任务简报，别只给感觉</h3><p>如果含糊会杀死智能体的有效性，那你的工作就是把「想法形状」的念头，变成一份经得起实现环节考验的任务简报。这恰恰是优秀管理者做的事：把意图转化为可执行的东西。</p>
+<p>一份实用的智能体任务简报应覆盖：目标结果（做完后什么应当成立）、背景上下文（这件事落在代码库哪个位置、有哪些既有模式）、约束条件（性能、安全、API 形态、依赖规则、代码风格约定）、非目标（我们明确不做什么）、验收标准（具体可查的条件，比如测试通过、接口按预期行为响应）、集成说明（哪些文件不可触碰、接口接缝应落在哪里），以及验证方案（我们如何确认它真的能用）。</p>
+<p>这决定了你拿到的是一个干净的 PR，还是上千行你根本不敢信的烂摊子。</p>
+<p>有两个做法能让这件事轻松得多。第一，把智能体指向已有的模式——Anthropic 的指南明确建议点名你希望它参照或更新的文件，这样它会锚定在真实约定上，而不是自创一套。</p>
+<p>第二，把长期有效的规则放在智能体总能找到的地方。OpenAI 的 Codex 文档如今已把这一点写成标准做法：用 <code>AGENTS.md</code> 文件给出一致的预期，说明要跑哪些测试、lint 规则、依赖策略和文档要求。如果你带过新人熟悉代码库，这一幕会很熟悉：在他们动手写之前，先给地图、给约定、给「完成」的定义。</p>
+<h3 id="分派：判断什么可以完全交出去，什么必须留给你自己拍板"><a href="#分派：判断什么可以完全交出去，什么必须留给你自己拍板" class="headerlink" title="分派：判断什么可以完全交出去，什么必须留给你自己拍板"></a>分派：判断什么可以完全交出去，什么必须留给你自己拍板</h3><p>用智能体时有个出人意料的陷阱：把本该由人做的部分也过度分派出去——产品意图、API 设计取舍、架构边界、长期维护决策。</p>
+<p>OpenAI 的「AI 原生工程团队」指南把它表述为覆盖软件开发生命周期的三段式划分：分派（delegate）、评审（review）、负责（own）。即便在他们那份乐观的设想里，工程师依然掌握最终决策与签字权，在模糊问题上尤其如此。</p>
+<p>这套划分可以干净地映射到编排上。有些工作可以完全分派：规格说明清晰的机械式实现、样板化重构、有强评审兜底的测试生成、文档更新、低风险维护杂活。有些工作可以分派，但你要设检查点、留在回路里：任何触碰共享接口的工作、任何可能产生合并冲突的工作、任何带棘手产品边界情况的工作、任何涉及数据迁移的工作。还有些工作你干脆不分派，或者只让它分派出去探索备选方案：系统架构与新抽象、需要品味的横切重构、产品决策以及「这个该不该做？」的判断、涉及安全关键或隐私敏感的设计决策。</p>
+<p>这和团队里派活用的是同一块肌肉：你不断在决定谁负责什么、给多大自主权是安全的、以及在工作固化之前要在哪里设一道检查点。</p>
+<h3 id="验证闭环：把问题拦在早期"><a href="#验证闭环：把问题拦在早期" class="headerlink" title="验证闭环：把问题拦在早期"></a>验证闭环：把问题拦在早期</h3><p>带人的时候你会学到，最浪费时间的方式就是太晚才去评审低质量的工作。你要的是早期反馈闭环和质量关卡。智能体也一样——只不过它能以高速批量产出低质量工作。</p>
+<p>验证闭环是破局点，最优秀的工具厂商正把它写进自己的指南里。<a target="_blank" rel="noopener" href="https://www.anthropic.com/engineering/claude-code-best-practices">Anthropic 的最佳实践</a>明确建议同时运行多个 Claude 实例：一个写代码，另一个通过评审和测试来验证，把它当成一次「职责分离的双人协作」。OpenAI 对 Codex 的定位在工具使用上同样明确：跑命令、跑测试、迭代到通过状态，然后再提 PR。</p>
+<p>验证闭环落地长这样：要求智能体跑测试套件（或限定范围的子集），并把输出附在最终回复里；要求改动范围内的 lint 与类型检查必须通过；要求行为变更必须新增或修改对应测试；要求最后交出一份结构化的「PR 材料包」——改了什么、为什么选这个方案、动了哪些文件、测试计划与结果、风险或后续事项。</p>
+<p>如果想再进一步，可以用双智能体模式：智能体 A 负责实现，智能体 B 负责评审正确性、风格、边界情况与漏掉的测试，然后再由智能体 A（或新开一个智能体 C）落实评审意见并重新跑一遍验证。这不是理论推演——Anthropic 确实把它作为工作流升级方案写进了推荐里。</p>
+<p>管理者的直觉在这里同样重要：你不只是在检查代码能不能编译，还在检查它是否符合约定、是否可维护、是否契合最初意图。</p>
+<h3 id="异步进展同步：把智能体当作要向你汇报的下属"><a href="#异步进展同步：把智能体当作要向你汇报的下属" class="headerlink" title="异步进展同步：把智能体当作要向你汇报的下属"></a>异步进展同步：把智能体当作要向你汇报的下属</h3><p>如果你同时跑十个并行会话，就不可能挨个翻记录去搞清楚发生了什么。你需要轻量、可复用的进展同步机制。这就是把异步管理的打法套用到智能体上。</p>
+<p>定一个同步节奏：「如果 15 分钟内没有实质进展，就停下来报告阻塞点。」并要求按固定格式汇报状态：改了什么？下一步做什么？有哪些风险或阻塞？需要我提供什么？</p>
+<p>这看着是小事，但它正是让并行工作不脱轨、又不必全程盯着的办法。要找个具体类比的话，管理智能体很像管理一支跨时区的分布式团队：把清晰度前置，依赖书面更新，把实时注意力留给决策和解除阻塞。</p>
+<h2 id="难点是真实存在的（而且都是管理问题）"><a href="#难点是真实存在的（而且都是管理问题）" class="headerlink" title="难点是真实存在的（而且都是管理问题）"></a>难点是真实存在的（而且都是管理问题）</h2><h3 id="合并冲突会迅速成倍增长"><a href="#合并冲突会迅速成倍增长" class="headerlink" title="合并冲突会迅速成倍增长"></a>合并冲突会迅速成倍增长</h3><p>多个并行智能体改动相邻代码，就像让五个工程师不经协调地改同一个文件。这不是工具失灵，而是边界失守。解法跟带人类团队时一模一样：刻意划清任务边界、隔离工作、定义接口。</p>
+<p>实操上，这通常意味着让智能体在隔离的工作目录或分支里跑。<a target="_blank" rel="noopener" href="https://git-scm.com/docs/git-worktree">Git 工作树（git worktree）</a>是个很干净的模式——同一个仓库可以同时检出多个分支，各自放在独立目录里。Claude Code 的文档明确推荐在并行会话中使用 git worktree，避免实例之间互相干扰；Anthropic 的最佳实践还给出了「worktree + 每个 worktree 一个终端标签页」的分步操作范式。即使用的是云端智能体，原则也相同：分支分开、PR 要小、模块归属清晰。</p>
+<p>我最常用的几条边界规则，都是从团队协作里借来的：一个智能体只负责一个 PR，不允许多个智能体拼出一个巨型 PR；如果两个智能体可能碰同一批文件，就重新设计任务拆分；共享接口由人主导、在第一个 PR 里先落地，之后智能体再在这个接缝之上继续构建。</p>
+<h3 id="品味与「这个该不该做？」成了真正的瓶颈"><a href="#品味与「这个该不该做？」成了真正的瓶颈" class="headerlink" title="品味与「这个该不该做？」成了真正的瓶颈"></a>品味与「这个该不该做？」成了真正的瓶颈</h3><p>当构建变得廉价，你会开始什么都想做。这看起来很高效，直到你的产品变成一个塞满功能的杂物抽屉。</p>
+<p>这场转变里有个没被充分讨论的点：AI 并没有消除判断力的必要性，反而抬高了判断力的价值。「该不该做？」开始比「能不能做？」更重要。</p>
+<p>这其实是披着外衣的管理能力：排优先级、说不、定义什么叫成功、做小实验、快速掐掉坏点子。</p>
+<p>想把它落到实处，可以借两个管理学概念。第一，在制品（WIP）上限：限制同时活跃的智能体任务流数量，免得被评审淹没（正是 Willison 指出的那个瓶颈）。第二，叫停标准：在动手之前就先定义好，出现什么情况就停止推进某个功能。</p>
+<h2 id="我享受其中的部分（以及为什么这份投入值得）"><a href="#我享受其中的部分（以及为什么这份投入值得）" class="headerlink" title="我享受其中的部分（以及为什么这份投入值得）"></a>我享受其中的部分（以及为什么这份投入值得）</h2><p>「随时随地派活」的效应是真实存在的。当后台智能体能直接对仓库干活、带回来可评审的变更，你就从「先记个 issue 以后再说」变成了「现在就动手把这个想法做出来」。</p>
+<p>我目前的做法是：跑 4～5 个后台智能体处理中低复杂度的工作，同时自己在本地另外 3～5 个会话里保持人在回路，处理架构和产品上需要拿捏的工作。能用手机派活，改变了我的创作循环：想法 → 实现草稿 → 评审 → 迭代。</p>
+<p>当你有质量标准和一套流程时，这种体验极其令人满足，因为创作循环被缩短了。但只有当你把编排当管理、而不是当魔法时，它才会一直令人满足。你必须对自己同时处理多任务、来回切换的带宽有现实估计。不是每个人都需要同时开 10～15 个智能体。Boris 的工作流更适合作为一个展示「可能性上限」的极端案例，而不是一条硬性要求。</p>
+<h2 id="一套简单的编排操作系统"><a href="#一套简单的编排操作系统" class="headerlink" title="一套简单的编排操作系统"></a>一套简单的编排操作系统</h2><p>如果你只想练一个可重复的闭环，就用这个：</p>
+<p>像管理者一样规划——写清任务简报，包含目标结果、约束条件和验收标准。像编排者一样派发——把任务分配给并行智能体，并给出明确边界。异步监控——轻量进展同步、快速解除阻塞、避免过程中反复折腾。激进验证——测试、lint、结构化 PR 材料包，必要时加第二个智能体做评审。谨慎集成——按深思熟虑的顺序合并，留意越界改动。最后复盘——更新你的 <a target="_blank" rel="noopener" href="https://developers.openai.com/codex/guides/agents-md/">AGENTS.md</a> 和检查清单，让下一轮起步更聪明。</p>
+<p>对我们大多数人来说，甜区更接近这样：少量后台智能体处理中低复杂度的工作，而你在架构和产品细节上保持人在回路，同时对自己能承受多少任务切换有现实估计。</p>
+<p>这就是编排。而想把它做好，最快的路径是去学那些让一个人能有效带领工程师的能力：清晰表达、任务分派、反馈闭环、异步沟通。</p>
+<p>很高兴和大家分享：我与 O’Reilly 合作出版了一本新的<a target="_blank" rel="noopener" href="https://beyond.addy.ie/">AI 辅助工程图书</a>。书站上还有不少免费提示，感兴趣的可以看看。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://kylin1997.github.io">Zhang Guoli</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://kylin1997.github.io/2026/11/11/your-coding-agents-need-a-manager/">https://kylin1997.github.io/2026/11/11/your-coding-agents-need-a-manager/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://kylin1997.github.io" target="_blank">老张的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/AI-Agent/">AI Agent</a><a class="post-meta__tags" href="/tags/%E7%BF%BB%E8%AF%91/">翻译</a></div><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/11/06/laya-snake-training-principles/" title="教Laya玩贪吃蛇：决策模型的监督微调【原理篇】"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">教Laya玩贪吃蛇：决策模型的监督微调【原理篇】</div></div><div class="info-2"><div class="info-item-1">读这篇不需要机器学习基础。我们用贪吃蛇做一次训练实验，重点是看懂模型收到什么、训练怎样改变它，再判断这些变化有没有帮助。 Laya 是一个决策模型：根据给定的信息和任务说明，进行选择、评分或判断，并返回结构化结果。 在本工程里，我们把游戏状态和各个方向的报告写成文字，让它评判移动选项，再由程序控制蛇移动。 这里采用有监督训练：给每条输入配上参考答案，用它衡量模型预测的误差，再调整模型权重。参考移动方向由名为 Oracle 的程序按路径和安全规则计算，不是保证最优的答案。 我们从下载的官方模型继续训练，而不是从零训练。「官方版」指原始模型，「微调版」指这次训练后另存的新模型。 这篇讲实验设计、输入文本、模型内部和训练机制。同一系列还有《操作篇》（运行命令与产物）和《证据篇》（实际效果与限制），这两篇会作为后续文章陆续发出，本篇不依赖它们也能读完。模型结构中更细的公式和实现，仍放在可跳过的小节里。 先认识几个词后面会反复出现，先打个底，不用记死：    词 这篇文章里的意思    模型 &#x2F; 权重 模型就是一大堆数字（这里约 4.2 亿个），这些数字叫权重。训练就是在改它们 ...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/08/29/harness-engineering/" title="harness 工程：如何构建稳定可靠的 AI agent"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-29</div><div class="info-item-2">harness 工程：如何构建稳定可靠的 AI agent</div></div><div class="info-2"><div class="info-item-1"> agent 出问题时，大多数人的第一反应是修改提示词、然后换模型、然后加大 context window， agent 还是会忘记之前的决策、还是会用错工具、还是会跳过验证、还是卡在同一个循环里。 问题并不总是出在智能本身，问题出在它周围的环境，这个环境就是 harness，而设计它，就是 harness 工程。  模型只是推理引擎模型可以建议下一步动作 但它无法独自造出一个可靠的运行环境 harness 决定模型能看到什么、能碰到什么、哪些东西能跨会话留存、什么算证据，以及这次运行何时必须停下 MODEL 推理并提出动作  HARNESS 选择 context 暴露工具 存储状态 强制执行权限 检查结果 记录轨迹 从失败中恢复  提示词是这个系统里的一个组件 模型也是其中一个组件 而产品，是周围每个组件协同运转后的结果  提示词工程改进的是指令 harness 工程改进的是指令被执行的条件   同一个模型，可以构建出截然不同的 agent把同一个模型接入聊天界面，它会回答问题 让它在代码仓库中工作，并为它提供终端访问、测试、浏览器工具、项目记忆、相互隔离的 worktree ...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Zhang Guoli</div><div class="author-info-description">^_^碳基老张 —— 持续学习、好好生活</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">3</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/kylin1997"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B0%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%9A%84%E5%BF%83%E6%99%BA%E6%A8%A1%E5%9E%8B"><span class="toc-text">新工作流的心智模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E7%AE%A1%E7%90%86%E8%83%BD%E5%8A%9B%E8%83%BD%E8%AE%A9%E4%BD%A0%E6%9B%B4%E6%93%85%E9%95%BF-AI-%E7%BC%96%E7%A0%81"><span class="toc-text">为什么管理能力能让你更擅长 AI 编码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B8%85%E6%99%B0%E7%9A%84%E8%BE%B9%E7%95%8C%E5%AE%9A%E4%B9%89%EF%BC%9A%E5%86%99%E4%BB%BB%E5%8A%A1%E7%AE%80%E6%8A%A5%EF%BC%8C%E5%88%AB%E5%8F%AA%E7%BB%99%E6%84%9F%E8%A7%89"><span class="toc-text">清晰的边界定义：写任务简报，别只给感觉</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E6%B4%BE%EF%BC%9A%E5%88%A4%E6%96%AD%E4%BB%80%E4%B9%88%E5%8F%AF%E4%BB%A5%E5%AE%8C%E5%85%A8%E4%BA%A4%E5%87%BA%E5%8E%BB%EF%BC%8C%E4%BB%80%E4%B9%88%E5%BF%85%E9%A1%BB%E7%95%99%E7%BB%99%E4%BD%A0%E8%87%AA%E5%B7%B1%E6%8B%8D%E6%9D%BF"><span class="toc-text">分派：判断什么可以完全交出去，什么必须留给你自己拍板</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81%E9%97%AD%E7%8E%AF%EF%BC%9A%E6%8A%8A%E9%97%AE%E9%A2%98%E6%8B%A6%E5%9C%A8%E6%97%A9%E6%9C%9F"><span class="toc-text">验证闭环：把问题拦在早期</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%82%E6%AD%A5%E8%BF%9B%E5%B1%95%E5%90%8C%E6%AD%A5%EF%BC%9A%E6%8A%8A%E6%99%BA%E8%83%BD%E4%BD%93%E5%BD%93%E4%BD%9C%E8%A6%81%E5%90%91%E4%BD%A0%E6%B1%87%E6%8A%A5%E7%9A%84%E4%B8%8B%E5%B1%9E"><span class="toc-text">异步进展同步：把智能体当作要向你汇报的下属</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9A%BE%E7%82%B9%E6%98%AF%E7%9C%9F%E5%AE%9E%E5%AD%98%E5%9C%A8%E7%9A%84%EF%BC%88%E8%80%8C%E4%B8%94%E9%83%BD%E6%98%AF%E7%AE%A1%E7%90%86%E9%97%AE%E9%A2%98%EF%BC%89"><span class="toc-text">难点是真实存在的（而且都是管理问题）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%88%E5%B9%B6%E5%86%B2%E7%AA%81%E4%BC%9A%E8%BF%85%E9%80%9F%E6%88%90%E5%80%8D%E5%A2%9E%E9%95%BF"><span class="toc-text">合并冲突会迅速成倍增长</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%93%81%E5%91%B3%E4%B8%8E%E3%80%8C%E8%BF%99%E4%B8%AA%E8%AF%A5%E4%B8%8D%E8%AF%A5%E5%81%9A%EF%BC%9F%E3%80%8D%E6%88%90%E4%BA%86%E7%9C%9F%E6%AD%A3%E7%9A%84%E7%93%B6%E9%A2%88"><span class="toc-text">品味与「这个该不该做？」成了真正的瓶颈</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%91%E4%BA%AB%E5%8F%97%E5%85%B6%E4%B8%AD%E7%9A%84%E9%83%A8%E5%88%86%EF%BC%88%E4%BB%A5%E5%8F%8A%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E4%BB%BD%E6%8A%95%E5%85%A5%E5%80%BC%E5%BE%97%EF%BC%89"><span class="toc-text">我享受其中的部分（以及为什么这份投入值得）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E5%A5%97%E7%AE%80%E5%8D%95%E7%9A%84%E7%BC%96%E6%8E%92%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="toc-text">一套简单的编排操作系统</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/11/your-coding-agents-need-a-manager/" title="你的 AI 编码智能体，需要一个管理者">你的 AI 编码智能体，需要一个管理者</a><time datetime="2026-11-11T10:40:00.000Z" title="发表于 2026-11-11 18:40:00">2026-11-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/06/laya-snake-training-principles/" title="教Laya玩贪吃蛇：决策模型的监督微调【原理篇】">教Laya玩贪吃蛇：决策模型的监督微调【原理篇】</a><time datetime="2026-11-06T07:00:00.000Z" title="发表于 2026-11-06 15:00:00">2026-11-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/08/29/harness-engineering/" title="harness 工程：如何构建稳定可靠的 AI agent">harness 工程：如何构建稳定可靠的 AI agent</a><time datetime="2026-08-29T05:00:03.000Z" title="发表于 2026-08-29 13:00:03">2026-08-29</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Zhang Guoli</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.1</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.1"></script><script src="/js/main.js?v=5.5.1"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

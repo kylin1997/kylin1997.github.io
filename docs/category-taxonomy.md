@@ -55,6 +55,7 @@ categories:
 | --- | --- |
 | harness 工程：如何构建稳定可靠的 AI agent | harness → 01-architecture |
 | 教Laya玩贪吃蛇：决策模型的监督微调【原理篇】 | model → 微调 |
+| 你的 AI 编码智能体，需要一个管理者 | harness → 02-build |
 
 ## 新文章 front-matter 模板
 

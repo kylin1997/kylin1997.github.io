@@ -1,0 +1,245 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>构建常驻 agent | 老张的博客</title><meta name="author" content="Zhang Guoli"><meta name="copyright" content="Zhang Guoli"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="常驻 agent 的外围架构由事件收件箱、定时器、记忆、权限和发件箱五个核心构件组成，它们共同让短暂的 run 无限期循环，形成「常驻」的体验。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="构建常驻 agent">
+<meta property="og:url" content="https://kylin1997.github.io/2026/11/18/building-always-on-agents/index.html">
+<meta property="og:site_name" content="老张的博客">
+<meta property="og:description" content="常驻 agent 的外围架构由事件收件箱、定时器、记忆、权限和发件箱五个核心构件组成，它们共同让短暂的 run 无限期循环，形成「常驻」的体验。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://kylin1997.github.io/img/butterfly-icon.png">
+<meta property="article:published_time" content="2026-11-18T05:35:00.000Z">
+<meta property="article:modified_time" content="2026-11-18T05:51:44.594Z">
+<meta property="article:author" content="Zhang Guoli">
+<meta property="article:tag" content="AI Agent">
+<meta property="article:tag" content="翻译">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kylin1997.github.io/img/butterfly-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "构建常驻 agent",
+  "url": "https://kylin1997.github.io/2026/11/18/building-always-on-agents/",
+  "image": "https://kylin1997.github.io/img/butterfly-icon.png",
+  "datePublished": "2026-11-18T05:35:00.000Z",
+  "dateModified": "2026-11-18T05:51:44.594Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Zhang Guoli",
+      "url": "https://kylin1997.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://kylin1997.github.io/2026/11/18/building-always-on-agents/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: false,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '构建常驻 agent',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">老张的博客</span></a><a class="nav-page-title" href="/"><span class="site-name">构建常驻 agent</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">构建常驻 agent</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-11-18T05:35:00.000Z" title="发表于 2026-11-18 13:35:00">2026-11-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-11-18T05:51:44.594Z" title="更新于 2026-11-18 13:51:44">2026-11-18</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/harness/">harness</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/harness/01-architecture/">01-architecture</a></span></div><div class="meta-secondline"></div></div></div><article class="container post-content" id="article-container"><blockquote>
+<p>原文标题：Building always-on agents<br>作者：William Hu<br>发布日期：2026 年 11 月 13 日<br>原文链接：<a target="_blank" rel="noopener" href="https://claude.com/resources/articles/building-always-on-agents">https://claude.com/resources/articles/building-always-on-agents</a></p>
+</blockquote>
+<p>常驻 agent 会无限期运行，在众多 session 中决定如何行动、何时行动。本指南梳理它们的核心构件，以及这些构件如何协同工作。</p>
+<p>过去几个月里，我们看到了常驻 agent 的再度兴起。</p>
+<p>常驻 agent 是有状态且主动的：它们跨 session 管理 context，并在没有直接监督的情况下采取行动。在底层，它们和其他 agent 运行在同一套<a target="_blank" rel="noopener" href="https://www.anthropic.com/research/building-effective-agents">核心循环</a>之上。区别在于外围架构，它由一些构件组成，这些构件控制 agent 何时被唤醒、两次 run 之间有哪些内容得以延续，以及 agent 的工作如何送达用户。</p>
+<p>这一再度兴起在很大程度上源于近期的模型进步，这些进步让常驻 agent 的运行更加切实可行。首先，最新的模型判断力更强：在理解用户意图、判断何时该主动联系用户方面更加可靠。其次，智能正变得更便宜，长周期任务从中受益最大。例如，在<a target="_blank" rel="noopener" href="https://platform.claude.com/docs/en/about-claude/models/optimizing-for-cost-and-intelligence">一项长周期编码基准测试</a>中，Opus 5.5 每解决一个任务的成本比 Opus 5 低 78%，而在典型工作负载下这一降幅为 40%。</p>
+<p>客户已开始询问我们，如何把这种体验集成到他们自己的产品中。一些公司希望让现有的 agent 更具主动性，另一些则希望从零开始构建。</p>
+<p>本文将拆解常驻 agent 背后的构件，并梳理它们如何协同工作。</p>
+<h2 id="常驻-agent-背后的循环"><a href="#常驻-agent-背后的循环" class="headerlink" title="常驻 agent 背后的循环"></a>常驻 agent 背后的循环</h2><p>常驻 agent 并非真正“常驻”。这只是对用户体验的一种描述。</p>
+<p>实际上，agent 大部分时间都在休眠，周期性地醒来工作。每一段工作称为一次 <strong>run</strong>：agent 收到一个事件，完成任务，然后保存关于所发生情况的信息。run 在一个 <strong>session</strong> 内部进行，session 就是消息与工具调用的记录。run 一旦结束，agent 便回到休眠状态，如此循环往复、无休无止。</p>
+<p><img src="/assets/always-on-agents/timeline.gif" alt="Animated diagram of an always-on agent’s timeline: long stretches asleep with no tokens spent, broken by brief runs. Each run has four steps: an event arrives, a session starts, the agent loop runs, and the run writes back to stored state that carries over between runs."></p>
+<h2 id="核心构件"><a href="#核心构件" class="headerlink" title="核心构件"></a>核心构件</h2><p>常驻 agent 的外围架构包含五个核心构件：事件收件箱、定时器、记忆、权限和发件箱。下面逐一来看。</p>
+<h3 id="事件收件箱"><a href="#事件收件箱" class="headerlink" title="事件收件箱"></a>事件收件箱</h3><p>大多数 AI agents 只有在用户发送消息时才会运行。相比之下，常驻 agent 可以由多种类型的事件触发，包括 webhooks、定时任务和后台作业。</p>
+<p>一个看似诱人的做法是让每个事件来源直接调用 agent，但这有几种失败模式。例如，两个同时到达的事件可能启动相互竞争的 run，而一次崩溃可能让某个事件彻底丢失。</p>
+<p>这正是事件收件箱的用武之地。每个来源不是调用 agent，而是把一个事件发送到收件箱，由 worker 从中取走。</p>
+<p>最简单的版本包含三个组件：</p>
+<ul>
+<li>一个持久化的事件列表，通常是一张数据库表；</li>
+<li>一个 handler（通常是 HTTP 端点），负责把事件写入该列表；以及</li>
+<li>一个 worker（通常是后台服务），负责从该列表读取。</li>
+</ul>
+<p>收件箱应当跟踪每个事件的状态，并可根据来源提供的唯一标识符对事件去重。关系型数据库很适合做收件箱，每个事件都作为新的一行追加进去。我们建议从每个用户一个收件箱开始，但如果需要更高的并行度，可以进一步拆分。</p>
+<p><img src="/assets/always-on-agents/event-inbox.png" alt="Diagram of the event inbox. A handler (an HTTP endpoint) writes each event to the inbox, a database table that tracks status and drops duplicates, and wakes the worker. The worker reads what’s pending, starts the run, waits for it to finish, and marks the events done."></p>
+<p>当新事件到来时，handler 将其写入收件箱并唤醒 worker。worker 读取所有待处理内容并启动一次 run。延续此前工作的事件（例如用户的回复）会恢复已有的 session，其他一切事件则启动新的 session。</p>
+<p>随后，worker 把事件交给 agent 循环，等待 run 结束，并把相应事件标记为完成。实现细节可能相当棘手，以下是几条最佳实践：</p>
+<ul>
+<li><strong>handler 应尽快确认事件</strong>。某些来源（例如 webhook 提供方）会把慢响应视为失败。handler 仍可运行轻量级检查，但任何更深入的验证（例如检查 prompt injection）都应在 run 期间完成。</li>
+<li><strong>收件箱应是唯一事实来源</strong>。worker 被唤醒时，应首先从收件箱拉取最新事件。这样，如果 worker 在 run 中途挂掉，另一个 worker 可以接手同一事件并重试。</li>
+<li><strong>一个收件箱同一时间只应有一个活跃的 worker</strong>。这可以避免两次 run 重复劳动或相互覆盖。当新事件在 run 中途到达时，你可以把它推给下一次 run、并入当前 run，或者中断并重启。</li>
+<li><strong>worker 应把待处理事件批量合并</strong>。例如，如果用户连续发送多条消息，worker 可以把它们合并成一次 run，这样 agent 只需回复一次。</li>
+</ul>
+<h3 id="定时器"><a href="#定时器" class="headerlink" title="定时器"></a>定时器</h3><p>定时器与事件收件箱一起，让常驻 agent 能够主动作为。定时器通常分为两类：follow-up 或 schedule。follow-up 是 agent 为自己设定的截止时间，例如稍后确认一条回复。schedule 则是按已知节奏重复发生的任务，例如每日简报。</p>
+<p>定时器存放在自己的持久化存储中，通常是另一张数据库表，与收件箱分开。收件箱只应保存已经可以处理的事件。follow-up 和 schedule 可以采用相似的结构，但 schedule 还需要跟踪它的重复规律。</p>
+<p><img src="/assets/always-on-agents/timers.png" alt="Diagram of timers. A run sets a timer in a database table, either a follow-up set by the agent or a schedule set by the user. A scheduler finds what’s due and adds an event to the event inbox, which starts the next run."></p>
+<p>定时器本身不会启动 run。相反，scheduler 通常是一个后台服务，会以固定间隔轮询该存储，触发所有到期的定时器。每一轮，scheduler 会：</p>
+<ul>
+<li>扫描存储，找出到期的定时器。</li>
+<li>根据类别更新每个定时器。follow-up 应被标记为完成。schedule 则应把到期时间更新到下一次发生的时间。</li>
+<li>向收件箱添加一个事件并唤醒 worker。</li>
+</ul>
+<p>对于 scheduler，你可以自建服务，也可以使用持久化执行引擎。</p>
+<h3 id="记忆"><a href="#记忆" class="headerlink" title="记忆"></a>记忆</h3><p>常驻 agent 要在许多彼此不相连的 run 中工作，并依靠记忆来保持连续性。</p>
+<p>与事件收件箱和定时器类似，记忆也应有自己的存储。在我们的产品中，例如 Claude Code 的 <a target="_blank" rel="noopener" href="https://code.claude.com/docs/en/memory">auto memory</a> 和 Messages API 的 <a target="_blank" rel="noopener" href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool">memory tool</a>，它是以文件目录的形式实现的。对常驻 agent 而言，这些目录应映射到持久化存储，通常是数据库或对象存储。这样，记忆就能比 worker 存活得更久。</p>
+<p>一条经验法则是：记忆只应保存 agent 无法再次查到的内容。如果某样东西已经存在于其他系统中（例如问题追踪器），你应当保存一个指向它的指针。以下是常驻 agent 应存储的记忆类型细分：</p>
+<ul>
+<li>**用户指令：**用户关于 agent 行为的任何指令都应保存在单独的文件中，并在每次 run 开始时加载。用户不会总在旁边指导 agent，因此这些指令必须在 run 之间延续。</li>
+<li>**用户笔记：**agent 应保存它了解到的关于用户的信息，例如用户的角色、偏好或用户给出的纠正意见。你可以先用一个文件，随着笔记增多再拆成多个小文件。在后一种情况下，每次 run 开始时只加载一个索引，但当 agent 需要更多细节时，可以把各个文件拉入 context。</li>
+<li>**过往消息：**agent 应记录它已经告诉过用户的内容，避免重复。它可以把这些内容存放在单独的文件中并在每次 run 开始时加载，也可以让 worker 加载 agent 最近与用户的几条消息。</li>
+<li>**任务进度：**对于每个进行中的任务，agent 应保存一份进度文件，写明已完成和未完成的部分。这样，任何新的 run 都可以读取该文件，从上一次 run 停下的地方继续。与用户笔记类似，每次 run 开始时只加载一个索引，但当 agent 需要更多细节时，可以把各个文件拉入 context。</li>
+</ul>
+<p>下图展示了一个示例配置。</p>
+<p><img src="/assets/always-on-agents/memory-setup.png" alt="Diagram of an example memory setup as a directory of files. instructions.md, index.md, and reported.md are loaded at the start of every run, while the notes&#x2F; and progress&#x2F; folders are read when needed. The agent writes to memory during the run."></p>
+<p>以上描述的都是在 run 期间保存的记忆。你还可以加入 dreaming，它回顾过往 session 来整理记忆。dreaming 可以替换过时的条目，并发现那些只有在多次 run 中才会显现的规律。如果你想了解更多，我们的<a target="_blank" rel="noopener" href="https://www.anthropic.com/research/components-of-agent-memory">关于 agent memory 的文章</a>有更详细的介绍。</p>
+<h4 id="在-context-window-内部"><a href="#在-context-window-内部" class="headerlink" title="在 context window 内部"></a>在 context window 内部</h4><p>在做任何工作之前，agent 会加载系统提示词、工具定义和记忆文件。这部分初始的 context“开销”会被计入每一次 run，因此我们建议保持精简，并使用 <a target="_blank" rel="noopener" href="https://platform.claude.com/docs/en/build-with-claude/prompt-caching">prompt caching</a> 来降低成本。</p>
+<p>新的 session 只带着这部分 context 开销和触发 run 的事件开始。相比之下，已有的 session 会带回它此前各次 run 中的消息和工具调用。</p>
+<p>如果 session 变得过长，你可以<a target="_blank" rel="noopener" href="https://platform.claude.com/docs/en/build-with-claude/compaction">压缩较早的消息</a>，或者开启一个新的 session。两种做法都会损失细节，因此任何需要长期保留的内容都应在过程中保存到记忆里。</p>
+<p><img src="/assets/always-on-agents/context-window.gif" alt="Animated chart of context used over time. A fixed band for the system prompt, tools, and memory is present on every run. An existing session brings back its whole transcript and grows until compaction turns the older transcript into a summary."></p>
+<h3 id="权限"><a href="#权限" class="headerlink" title="权限"></a>权限</h3><p>权限是常驻 agent 风险最大的地方。一次 run 持有用户的访问权限，并且按设计是在无人值守的情况下运行的。对于每一次工具调用，agent 都需要决定是自行继续、阻止它，还是等待批准。</p>
+<p>权限所需的组件与其他 agent 使用的组件相同：</p>
+<ul>
+<li>**凭证存储：**常驻 agent 通常需要敏感的用户凭证（如密码或访问令牌）才能发挥作用。<a target="_blank" rel="noopener" href="https://code.claude.com/docs/en/agent-sdk/secure-deployment#credential-management">推荐的做法</a>是在 agent 环境之外设置一个代理，由它向对外请求添加凭证。agent 发出不带凭证的请求，代理在转发前注入真实凭证。</li>
+<li>**auto mode：**常驻 agent 应当能够在没有用户持续输入的情况下工作。我们已经用 Claude Code 中的 <a target="_blank" rel="noopener" href="https://www.anthropic.com/research/claude-code-auto-mode">auto mode</a> 解决过这个问题的一个版本。auto mode 使用分类器审查风险较高的操作，并阻止分类器判定为危险的操作，以便 Claude 找到更安全的做法。不过，对最重要的决策，用户复核仍然是必要的。</li>
+<li>**deferred tool calls：**在 Claude Code 中，<a target="_blank" rel="noopener" href="https://code.claude.com/docs/en/hooks#defer-a-tool-call-for-later">hook 可以延迟一次工具调用</a>，并等待用户的额外输入。同样的模式也适用于常驻 agent——在采取某些行动之前，它可能需要澄清或批准。当一次调用被延迟时，run 结束，session 在调用中途被保存。请求会展示给用户（例如通过用 <a target="_blank" rel="noopener" href="https://modelcontextprotocol.io/extensions/apps/overview">MCP Apps</a> 构建的交互式卡片），用户的回答会作为收件箱中的一个事件返回。该事件启动一次新的 run，用用户的输入恢复保存的 session。在延迟调用等待回复期间，worker 可以处理其他事件，因此 agent 不会被阻塞。</li>
+</ul>
+<h3 id="发件箱"><a href="#发件箱" class="headerlink" title="发件箱"></a>发件箱</h3><p>对大多数 AI agents 来说，响应是在生成过程中流式传给用户的，这样用户可以跟随 Claude 推理问题、调用工具并写出答案的全过程。</p>
+<p>常驻 agent 则相反，它们的大部分工作在后台完成。用户得到的是结果和少量细节，而不是完整的逐步分解。</p>
+<p><img src="/assets/always-on-agents/outbox.png" alt="Diagram of the outbox. A run ends with nothing to say, a send tool call, or a deferred tool call that asks the user. Messages go to the outbox, a database table, and a dispatcher delivers them to the user. A deferred request can go through the outbox or be shown in your own interface."></p>
+<p>一次 run 可以通过三种方式结束：</p>
+<ul>
+<li>agent 向发件箱发送一条消息，</li>
+<li>agent 判定无需发送任何内容，或者</li>
+<li>agent 使用 deferred tool call 请求许可或额外输入。</li>
+</ul>
+<p>大多数常驻 agent 用一个“send”工具把消息直接送达用户就够了。只有当你想控制 agent 消息的发送节奏，或让 agent 能够从错误中恢复时，才需要一个正式的发件箱。</p>
+<p>发件箱是一张独立的外发消息表，类似于事件收件箱。还有一个 dispatcher（通常是后台服务），角色类似于 worker。dispatcher 读取待发送消息，决定发送哪些，并把它们送给用户。来自 deferred tool call 的请求既可以通过发件箱发送，也可以直接显示在界面上。</p>
+<p>除了发送之外，调节 agent 发送多少消息也很重要。发得太多的 agent 会变得吵闹，而发得太少的 agent 会漏掉用户需要知道的事情。我们建议构建评估（evals）来找到合适的平衡点。在实践中，更好的做法是让 agent 一开始保持安静，然后随着时间推移逐渐赢得用户更多的注意力。</p>
+<h2 id="一切如何协同"><a href="#一切如何协同" class="headerlink" title="一切如何协同"></a>一切如何协同</h2><p>以下是五个构件如何协同工作：</p>
+<p><img src="/assets/always-on-agents/primitives.gif" alt="Animated diagram of how the five primitives fit together. Timers and the event inbox start a run, the run works with memory and permissions inside a session, and the outbox delivers messages to the user, whose answer comes back as an event."></p>
+<p>每次 run 都从收件箱中的一个事件开始，无论是用户消息、webhook 还是定时器。当 worker 取走一个事件时，它会启动一次 run，并在新的或已有的 session 中唤醒 agent。agent 读取记忆以获得基线，在自己的权限范围内采取行动，然后用学到的任何内容更新记忆。run 结束后，agent 向发件箱写入一行，dispatcher 把消息送达用户。</p>
+<p>这些共同形成一个循环。run 可以设定一个定时器，在稍后再次唤醒 agent；而当用户回复一条消息时，其回答会作为收件箱中的一个事件返回。每次 run 都很短暂，但这个循环会无限期持续下去，正是这一点让 agent 感觉像是常驻。</p>
+<h2 id="致谢"><a href="#致谢" class="headerlink" title="致谢"></a>致谢</h2><p><em>本文由 William Hu 撰写。特别感谢 Rodrigo Olivares 和 Michael Segner 的贡献。</em></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://kylin1997.github.io">Zhang Guoli</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://kylin1997.github.io/2026/11/18/building-always-on-agents/">https://kylin1997.github.io/2026/11/18/building-always-on-agents/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://kylin1997.github.io" target="_blank">老张的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/AI-Agent/">AI Agent</a><a class="post-meta__tags" href="/tags/%E7%BF%BB%E8%AF%91/">翻译</a></div><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/11/11/your-coding-agents-need-a-manager/" title="你的 AI 编码智能体，需要一个管理者"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">你的 AI 编码智能体，需要一个管理者</div></div><div class="info-2"><div class="info-item-1">并行使用 AI 编码智能体时，开发者需要像管理团队一样明确任务边界、合理分派工作、验证成果，并协调异步协作。</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/08/29/harness-engineering/" title="harness 工程：如何构建稳定可靠的 AI agent"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-08-29</div><div class="info-item-2">harness 工程：如何构建稳定可靠的 AI agent</div></div><div class="info-2"><div class="info-item-1"> agent 出问题时，大多数人的第一反应是修改提示词、然后换模型、然后加大 context window， agent 还是会忘记之前的决策、还是会用错工具、还是会跳过验证、还是卡在同一个循环里。 问题并不总是出在智能本身，问题出在它周围的环境，这个环境就是 harness，而设计它，就是 harness 工程。  模型只是推理引擎模型可以建议下一步动作 但它无法独自造出一个可靠的运行环境 harness 决定模型能看到什么、能碰到什么、哪些东西能跨会话留存、什么算证据，以及这次运行何时必须停下 MODEL 推理并提出动作  HARNESS 选择 context 暴露工具 存储状态 强制执行权限 检查结果 记录轨迹 从失败中恢复  提示词是这个系统里的一个组件 模型也是其中一个组件 而产品，是周围每个组件协同运转后的结果  提示词工程改进的是指令 harness 工程改进的是指令被执行的条件   同一个模型，可以构建出截然不同的 agent把同一个模型接入聊天界面，它会回答问题 让它在代码仓库中工作，并为它提供终端访问、测试、浏览器工具、项目记忆、相互隔离的 worktree ...</div></div></div></a><a class="pagination-related" href="/2026/11/11/your-coding-agents-need-a-manager/" title="你的 AI 编码智能体，需要一个管理者"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-11-11</div><div class="info-item-2">你的 AI 编码智能体，需要一个管理者</div></div><div class="info-2"><div class="info-item-1">并行使用 AI 编码智能体时，开发者需要像管理团队一样明确任务边界、合理分派工作、验证成果，并协调异步协作。</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Zhang Guoli</div><div class="author-info-description">^_^碳基老张 —— 持续学习、好好生活</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/kylin1997"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E9%A9%BB-agent-%E8%83%8C%E5%90%8E%E7%9A%84%E5%BE%AA%E7%8E%AF"><span class="toc-text">常驻 agent 背后的循环</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E6%9E%84%E4%BB%B6"><span class="toc-text">核心构件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E6%94%B6%E4%BB%B6%E7%AE%B1"><span class="toc-text">事件收件箱</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E6%97%B6%E5%99%A8"><span class="toc-text">定时器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%B0%E5%BF%86"><span class="toc-text">记忆</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%A8-context-window-%E5%86%85%E9%83%A8"><span class="toc-text">在 context window 内部</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%83%E9%99%90"><span class="toc-text">权限</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%91%E4%BB%B6%E7%AE%B1"><span class="toc-text">发件箱</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E5%88%87%E5%A6%82%E4%BD%95%E5%8D%8F%E5%90%8C"><span class="toc-text">一切如何协同</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%B4%E8%B0%A2"><span class="toc-text">致谢</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/18/building-always-on-agents/" title="构建常驻 agent">构建常驻 agent</a><time datetime="2026-11-18T05:35:00.000Z" title="发表于 2026-11-18 13:35:00">2026-11-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/11/your-coding-agents-need-a-manager/" title="你的 AI 编码智能体，需要一个管理者">你的 AI 编码智能体，需要一个管理者</a><time datetime="2026-11-11T10:40:00.000Z" title="发表于 2026-11-11 18:40:00">2026-11-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/11/06/laya-snake-training-principles/" title="教Laya玩贪吃蛇：决策模型的监督微调【原理篇】">教Laya玩贪吃蛇：决策模型的监督微调【原理篇】</a><time datetime="2026-11-06T07:00:00.000Z" title="发表于 2026-11-06 15:00:00">2026-11-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/08/29/harness-engineering/" title="harness 工程：如何构建稳定可靠的 AI agent">harness 工程：如何构建稳定可靠的 AI agent</a><time datetime="2026-08-29T05:00:03.000Z" title="发表于 2026-08-29 13:00:03">2026-08-29</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Zhang Guoli</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.1</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.1"></script><script src="/js/main.js?v=5.5.1"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

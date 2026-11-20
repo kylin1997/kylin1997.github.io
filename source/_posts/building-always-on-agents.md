@@ -13,6 +13,7 @@ categories:
 > 作者：William Hu
 > 发布日期：2026 年 11 月 13 日
 > 原文链接：<https://claude.com/resources/articles/building-always-on-agents>
+> 原型工程：<https://github.com/kylin1997/always-on-agent>
 
 常驻 agent 会无限期运行，在众多 session 中决定如何行动、何时行动。本指南梳理它们的核心构件，以及这些构件如何协同工作。
 
